@@ -25,7 +25,31 @@ public class App {
      * hasta ese número separados por comas en grupos de hasta 8 números.
      * 
     */
+ public static String impares(int n){
+        try {
+            final byte MIN = 100;
+            final short MAX = 500;
+            if (n < MIN || n > MAX ) return "Por favor ingrese un número entre 100 y 500";
 
+            String texto = "";
+            // Contador porque si se hace con lenght() toma en cuenta las ;
+            short cont = 1;
+            for (int i = 0; i < n; i++) {
+                if (i % 2 != 0){
+                    texto += (i);
+                    if (cont % 8 == 0) texto += "\n";
+                    else texto += ";";
+                    cont ++;
+
+                }
+            }
+            return texto;
+        } catch (Exception e) {
+            return "Ha ocurrido un error\n" + e.toString();
+        }
+
+    }
+    
     /* 2. 	Escriba una función que reciba un entero N mayor de 2  y retorne un string cono esos N términos de la 
     serie de Fibonacci (La sucesión de Fibonacci se trata de una serie infinita de números naturales que empieza con un 0 y un 1 
     y continúa añadiendo números que son la suma de los dos anteriores: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 
@@ -33,7 +57,29 @@ public class App {
      * 
      * 
     */
+public static String fibonacci(int n) {
+        try {
+            if (n < 2) {
+                return "El número debe ser 2 o mayor";
+            }
 
+            StringBuilder serie = new StringBuilder("01");
+            int n1 = 0;
+            int n2 = 1;
+            int n3;
+
+            for (int i = 2; i < n; i++) {
+                n3 = n1 + n2;
+                serie.append(n3);
+                n1 = n2;
+                n2 = n3;
+            }
+
+            return serie.toString();
+        } catch (Exception e) {
+            return "Ha ocurrido un error\n" + e.toString();
+        }
+    }
     /* 
      * 3.	Diseñar y desarrollar una función que NO reciba datos de entrada, genere aleatoriamente un número entre 2 y 355, 
        le calcule su raíz cuadrada y retorne este valor. Para calcular las raíces usar la función Sqrt de la biblioteca Math.
@@ -43,6 +89,20 @@ public class App {
 
     */
 
+public static void raiz_aleatoria(){
+        try {
+            final byte MIN = 2;
+            final short MAX = 355;
+
+            int n = (int) (Math.random() * (MAX - MIN) + MIN);
+            double raiz = Math.sqrt(n);
+
+            System.out.println(String.format("Numero: %s Raiz: %.2f", n, raiz));
+        }
+        catch (Exception e){
+            System.out.println("Ha ocurrido un error");
+        }
+    }
 
 
 
@@ -53,7 +113,27 @@ public class App {
         Llame la función desde el main e imprimir el resultado arrojado.
     */
 
+public static String pares_en_rango(int n1, int n2){
+        try {
+            if (n1 >= n2) return "Se necesita que el primer numero sea menor que el segundo numero";
 
+            final byte MIN = 20;
+            final short MAX = 30;
+            final short novecientos = 900;
+
+            short cant_pares = 0;
+            int alea;
+            for (int i = 0; i < novecientos; i++) {
+                alea = (int) (Math.random() * (MAX - MIN) + MIN);
+                if (alea % 2 == 0 ){
+                    cant_pares++;
+                }
+            }
+            return Short.toString(cant_pares);
+        } catch (Exception e) {
+            return "Ha ocurrido un error";
+        }
+    }
 
 
     /* 5.	Diseñar y desarrollar una función que calcule una cantidad de números aleatorios que viene como parámetro de entrada 
@@ -63,7 +143,21 @@ public class App {
 
       
     */
+ public static int sumatoria_aleatorios(int cant_aleatorios){
+        try {
+            final byte MIN = 0;
+            if (cant_aleatorios <= MIN) return -1;
 
+            int suma = 0;
+            for (int i = 0; i < cant_aleatorios; i++) {
+                suma += (int) (Math.random() * 10);
+            }
+            return suma;
+        }
+        catch (Exception e){
+            return -1;
+        }
+    }
 
     /* 6.	Se requiere una función para simular el sorteo de una lotería, de acuerdo con las siguientes condiciones:
 
@@ -104,5 +198,50 @@ public class App {
      * 
      * 
     */
+public static String premios(){
+        try {
+            StringBuilder lista_premios = new StringBuilder();
+            short n_ganador;
+            short serie;
 
+            final short MIN = 100;
+            final short MAX = 150;
+
+            final byte UNO = 1;
+            final byte CINCO = 5;
+            final byte DIEZ = 10;
+            final byte VEINTE = 20;
+            final short DIEZ_MIL = 10000;
+
+            StringBuilder premio_mayor = new StringBuilder();
+
+            for (int i = 20; i > 0 ; i--) {
+                if (i == VEINTE){
+                    lista_premios.append("======PREMIOS MENORES=======\n");
+                } else if (i == CINCO) {
+                    lista_premios.append("======PREMIOS SECOS=========\n");
+                } else if (i == UNO) {
+                    lista_premios.append("======PREMIO MAYOR=========\n");
+                    for (int j = 0; j < 4; j++) {
+                        n_ganador = (short) (Math.random() * DIEZ);
+                        premio_mayor.append(n_ganador);
+                    }
+                    serie = (short) (Math.random() * (MAX - MIN + UNO) + MIN);
+
+                    lista_premios.append(String.format("Sorteo # %s - Número Premiado %s - Serie %s", i, premio_mayor, serie));
+                    break;
+                }
+                n_ganador = (short) (Math.random() * DIEZ_MIL);
+                serie = (short) (Math.random() * (MAX - MIN + UNO) + MIN);
+
+                lista_premios.append(String.format("Sorteo # %s - Número Premiado %04d - Serie %s\n", i, n_ganador, serie));
+
+            }
+
+            return lista_premios.toString();
+        }
+        catch (Exception e) {
+            return "Ha ocurrido un error";
+        }
+    }
 }
